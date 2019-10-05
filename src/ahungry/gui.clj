@@ -47,11 +47,24 @@
      :items [(ss/menu :text "File" :items [a-test])
              (ss/menu :text "Tabs" :items [tab1 tab2])])))
 
+(def *nodes (atom {}))
+
+(defn set-nodes! []
+  (reset! *nodes {:map (map/make)
+                  :laf (laf/make)
+                 }))
+
+(defn move-star [x y]
+  (ss/config!
+   (:map @*nodes)
+   :paint (map/paint x y)))
+
 (defn make []
+  (set-nodes!)
   (ss/tabbed-panel
    :tabs
    [
-    {:title "Map" :content (map/make)}
+    {:title "Map" :content (:map @*nodes)}
     {:title "Look and Feel" :content (laf/make)}
     ;; {:title "Switchable Canvas" :content (make-switchable-canvas)}
     ;; {:title "Paint1" :content (make-canvas-panel)}
