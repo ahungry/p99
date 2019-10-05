@@ -13,6 +13,7 @@
    [ahungry.gui.show :refer [show]]
    [ahungry.gui.laf :as gui.laf]
    [ahungry.gui.map :as gui.map]
+   [ahungry.map.core :as map.core]
    )
   (:import org.pushingpixels.substance.api.SubstanceCortex$GlobalScope)
   (:gen-class))
@@ -51,14 +52,18 @@
 (def *nodes (atom {}))
 
 (defn set-nodes! []
-  (reset! *nodes {:map (gui.map/make)
+  (reset! *nodes {:map (gui.map/make @map.core/world-map)
                   :laf (gui.laf/make)
                   }))
 
+;; TODO: This will probably become the way we keep redrawing the map
 (defn move-star [x y]
   (ss/config!
    (:map @*nodes)
-   :paint (gui.map/paint x y)))
+   :paint (gui.map/paint x y @map.core/world-map)))
+
+(defn show-map []
+  (show (gui.map/make @map.core/world-map)))
 
 (defn make []
   (set-nodes!)
