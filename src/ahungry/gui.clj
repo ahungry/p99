@@ -34,11 +34,11 @@
 
 (defn make-menu []
   (let [a-test (ssa/action :handler a-test :name "Test" :tip "Pop up an alert" :key "menu A")
-        tab1 (ssa/action :handler (fn [_e] (ss/selection! @*root 1))
-                         :name "Select Tab 1"
-                         :tip "Jump to tab 1."
+        tab1 (ssa/action :handler (fn [_e] (ss/selection! @*root 0))
+                         :name "Select Tab 0"
+                         :tip "Jump to tab 0."
                          :key "menu 1")
-        tab2 (ssa/action :handler (fn [_e] (ss/selection! @*root 2))
+        tab2 (ssa/action :handler (fn [_e] (ss/selection! @*root 1))
                          :name "Select Tab 1"
                          :tip "Jump to tab 1."
                          :key "menu 2")
@@ -78,7 +78,10 @@
    ;; (set-listeners! f)
    ))
 
+(def x (make))
+(reset! *root x)
 (defn set-root! [x] (reset! *root x) x)
+(.setFocusTraversalKeysEnabled x false)
 
 (defn main [& args]
   (ss/invoke-later
