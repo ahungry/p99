@@ -10,6 +10,7 @@
    [ahungry.net :as net]
    [ahungry.keys :as keys]
    [ahungry.listeners :as listeners]
+   [ahungry.gui.laf :as laf]
    )
   (:import org.pushingpixels.substance.api.SubstanceCortex$GlobalScope)
   (:gen-class))
@@ -25,54 +26,6 @@
 
 (def normal-font "ARIAL-PLAIN-20")
 (def title-font "ARIAL-14-BOLD")
-
-(defn laf-selector []
-  (ss/horizontal-panel
-   :items ["Substance skin: "
-           (ss/combobox
-            :model    (vals (SubstanceCortex$GlobalScope/getAllSkins))
-            :renderer (fn [this {:keys [value]}]
-                        (ss/text! this (.getClassName value)))
-            :listen   [:selection (fn [e]
-                                        ; Invoke later because CB doens't like changing L&F while
-                                        ; it's doing stuff.
-                                    (ss/invoke-later
-                                     (-> e
-                                         ss/selection
-                                         .getClassName
-                                         SubstanceCortex$GlobalScope/setSkin)))])]))
-
-(defn make-laf-stuff []
-  (ss/border-panel
-   ;; :class :xa
-   :hgap 5 :vgap 5 :border 5
-   :center (ss/vertical-panel
-            ;; :paint paint-image
-            :items [
-                    :separator
-                    (laf-selector)
-                    (ss/text :multi-line? true
-                             :text "Start"
-                             ;; :text notes
-                             :border 5
-                             :font normal-font
-                             :opaque? true
-                             ;; :foreground "#ffffff"
-                             ;; Yes! we can paint custom.
-                             ;; Would it work with image?
-                             ;; Well, almost - the painted image covers up the text...
-                             ;; :paint paint-image
-                             )
-                    :separator
-                    (ss/label :text "A Label")
-                    (ss/button :text "A Button")
-                    (ss/checkbox :text "A checkbox")
-                    (ss/combobox :model ["A combobox" "more" "items"])
-                    (ss/horizontal-panel
-                     :border "Some radio buttons"
-                     :items (map (partial ss/radio :text)
-                                 ["First" "Second" "Third"]))
-                    (ss/scrollable (ss/listbox :model (range 100)))])))
 
 (defn a-test [e]
   (prn e)
@@ -97,7 +50,7 @@
   (ss/tabbed-panel
    :tabs
    [
-    {:title "Look and Feel" :content (make-laf-stuff)}
+    {:title "Look and Feel" :content (laf/make-laf-stuff)}
     ;; {:title "Switchable Canvas" :content (make-switchable-canvas)}
     ;; {:title "Paint1" :content (make-canvas-panel)}
     ;; {:title "Paint2"
