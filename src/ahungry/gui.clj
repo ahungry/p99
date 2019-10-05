@@ -11,8 +11,8 @@
    [ahungry.keys :as keys]
    [ahungry.listeners :as listeners]
    [ahungry.gui.show :refer [show]]
-   [ahungry.gui.laf :as laf]
-   [ahungry.gui.map :as map]
+   [ahungry.gui.laf :as gui.laf]
+   [ahungry.gui.map :as gui.map]
    )
   (:import org.pushingpixels.substance.api.SubstanceCortex$GlobalScope)
   (:gen-class))
@@ -51,14 +51,14 @@
 (def *nodes (atom {}))
 
 (defn set-nodes! []
-  (reset! *nodes {:map (map/make)
-                  :laf (laf/make)
+  (reset! *nodes {:map (gui.map/make)
+                  :laf (gui.laf/make)
                   }))
 
 (defn move-star [x y]
   (ss/config!
    (:map @*nodes)
-   :paint (map/paint x y)))
+   :paint (gui.map/paint x y)))
 
 (defn make []
   (set-nodes!)
