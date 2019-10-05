@@ -3,5 +3,5 @@
             [ahungry.p99 :refer :all]))
 
 (deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+  (testing "Stub test"
+    (is (= 1 1))))

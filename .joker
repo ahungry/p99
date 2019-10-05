@@ -1,3 +1,7 @@
-;; -*- mode: clojure; -*-
+;; -*- mode: clojure -*-
 
-{:known-macros [[seesaw.graphics/path [move-to line-to]]]}
+{:known-macros
+ [
+  [seesaw.graphics/path [move-to line-to]]
+  [clojure.test/deftest [& r]]
+  ]}
