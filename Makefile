@@ -12,7 +12,7 @@ run: target/uberjar/p99-0.1.0-SNAPSHOT-standalone.jar
 		-Dawt.useSystemAAFontSettings=lcd \
 		-jar ./target/uberjar/p99-0.1.0-SNAPSHOT-standalone.jar
 
-target/uberjar/p99-1.0.0-SNAPSHOT-standalone.jar:
+target/uberjar/p99-0.1.0-SNAPSHOT-standalone.jar:
 	lein deps
 	lein uberjar
 
