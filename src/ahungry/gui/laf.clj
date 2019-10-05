@@ -7,6 +7,7 @@
    [seesaw.action :as ssa]
    [seesaw.config :as ssconfig]
    [clojure.tools.logging :as log]
+   [ahungry.gui :refer [show]]
    )
   (:import org.pushingpixels.substance.api.SubstanceCortex$GlobalScope)
   (:gen-class))
@@ -32,7 +33,7 @@
                                          .getClassName
                                          SubstanceCortex$GlobalScope/setSkin)))])]))
 
-(defn make-laf-stuff []
+(defn make []
   (ss/border-panel
    ;; :class :xa
    :hgap 5 :vgap 5 :border 5

@@ -11,6 +11,7 @@
    [ahungry.keys :as keys]
    [ahungry.listeners :as listeners]
    [ahungry.gui.laf :as laf]
+   [ahungry.gui.map :as map]
    )
   (:import org.pushingpixels.substance.api.SubstanceCortex$GlobalScope)
   (:gen-class))
@@ -46,11 +47,12 @@
      :items [(ss/menu :text "File" :items [a-test])
              (ss/menu :text "Tabs" :items [tab1 tab2])])))
 
-(defn make-main []
+(defn make []
   (ss/tabbed-panel
    :tabs
    [
-    {:title "Look and Feel" :content (laf/make-laf-stuff)}
+    {:title "Map" :content (map/make)}
+    {:title "Look and Feel" :content (laf/make)}
     ;; {:title "Switchable Canvas" :content (make-switchable-canvas)}
     ;; {:title "Paint1" :content (make-canvas-panel)}
     ;; {:title "Paint2"
@@ -87,7 +89,7 @@
      :menubar (make-menu)
      :on-close :exit
      :content
-     (-> (make-main) set-root!)
+     (-> (make) set-root!)
      )
     ss/pack!
     ss/show!)
