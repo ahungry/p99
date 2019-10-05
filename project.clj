@@ -21,7 +21,13 @@
 
                  ;; Config or persistence related
                  [ahungry/xdg-rc "0.0.4"]
+
+                 ;; Testing related
+                 [eftest "0.5.8"]
                  ]
+  :plugins [
+            [lein-eftest "0.5.8"]
+            ]
   :main ^:skip-aot ahungry.p99
   :target-path "target/%s"
   :repl-options {:init-ns ahungry.gui}
