@@ -66,7 +66,7 @@
    :tabs
    [
     {:title "Map" :content (:map @*nodes)}
-    {:title "Look and Feel" :content (laf/make)}
+    {:title "Look and Feel" :content (:laf @*nodes)}
     ;; {:title "Switchable Canvas" :content (make-switchable-canvas)}
     ;; {:title "Paint1" :content (make-canvas-panel)}
     ;; {:title "Paint2"
