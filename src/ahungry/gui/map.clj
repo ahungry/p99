@@ -7,7 +7,7 @@
    [seesaw.action :as ssa]
    [seesaw.config :as ssconfig]
    [clojure.tools.logging :as log]
-   [ahungry.gui :refer [show]]
+   [ahungry.gui.show :refer [show]]
    )
   (:gen-class))
 

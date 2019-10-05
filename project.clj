@@ -29,7 +29,8 @@
   :aot []
   :profiles {
              ;; Required to use clojure spec check facilities.
-             :dev {:dependencies [[org.clojure/test.check "0.9.0"]]}
+             :dev {:dependencies [[org.clojure/test.check "0.9.0"]]
+                   :injections [(use '[ahungry.gui.show])]}
              :uberjar {:aot :all}
              }
   :jvm-opts ["-Dfile.encoding=UTF8"

@@ -1,5 +1,5 @@
 (ns ahungry.gui
-(:require
+  (:require
    [seesaw.core :as ss]
    [seesaw.keystroke :as sk]
    [seesaw.graphics :as ssg]
@@ -10,6 +10,7 @@
    [ahungry.net :as net]
    [ahungry.keys :as keys]
    [ahungry.listeners :as listeners]
+   [ahungry.gui.show :refer [show]]
    [ahungry.gui.laf :as laf]
    [ahungry.gui.map :as map]
    )
@@ -52,7 +53,7 @@
 (defn set-nodes! []
   (reset! *nodes {:map (map/make)
                   :laf (laf/make)
-                 }))
+                  }))
 
 (defn move-star [x y]
   (ss/config!
@@ -72,24 +73,6 @@
     ;;  ;; :icon (slurp "close-icon.png")
     ;;  :content (make-canvas-panel2)}
     ]))
-
-
-(defn show
-  "REPL friendly way to pop up what we're working on."
-  [f]
-  (keys/init!)
-  (ss/invoke-later
-   (->
-    (ss/frame
-     :minimum-size [640 :by 480]
-     :menubar (make-menu)
-     :title "Widget"
-     :content f)
-    ;; add-behaviors
-    ss/pack!
-    ss/show!)
-   ;; (set-listeners! f)
-   ))
 
 (def x (make))
 (reset! *root x)

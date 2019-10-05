@@ -1,4 +1,10 @@
-(ns ahungry.util)
+(ns ahungry.util
+  (:require
+   [clojure.tools.logging :as log]
+   )
+  )
+
+(log/debug "beg")
 
 (defn contains-all?
   "Ensure that set 2 (s2) contains every member listed in set 1 (s1)."
@@ -6,3 +12,5 @@
   (let [s1 (set x1)
         s2 (set x2)]
     (= (count s1) (count (filter #(contains? s2 %) s1)))))
+
+(log/debug "fin")
