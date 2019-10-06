@@ -60,7 +60,10 @@
 (defn move-star [x y]
   (ss/config!
    (:map @*nodes)
-   :paint (gui.map/paint x y @map.core/world-map)))
+   :paint (gui.map/paint
+           x y
+           @map.core/world-map
+           (map.core/player))))
 
 (defn show-map []
   (show (gui.map/make @map.core/world-map)))

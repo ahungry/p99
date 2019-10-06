@@ -20,3 +20,5 @@
   )
 
 (def world-map (atom (init-lines)))
+
+(def player parser/get-current-position)

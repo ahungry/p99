@@ -29,6 +29,10 @@
    :y1 (* @*scale (read-string y1))
    :y2 (* @*scale (read-string y2))})
 
+(defn scale-player [{:keys [x y]}]
+  {:x (* @*scale (read-string x))
+   :y (* @*scale (read-string y))})
+
 (defn line->polygon [{:keys [x1 x2 y1 y2]}]
   (ssg/polygon [x1 y1] [x2 y2]))
 
@@ -56,14 +60,19 @@
     ))
 
 (defn paint
-  [x y points]
+  [x y points player]
   (fn [c g]
     (log/info c)
     (log/info g)
     (ssg/push
      g
+     ;; Translate to the map offsets we require
      (ssg/translate g x y)
+     ;; Draw the map lines
      (zone->lines points g)
+     ;; Now draw an indicator for where player should be
+     (let [{:keys [x y]} (scale-player player)]
+       (ssg/translate g x y))
      (ssg/draw g star
                (ssg/style :foreground java.awt.Color/BLACK
                           :background java.awt.Color/YELLOW))
@@ -74,7 +83,7 @@
   ([points]
    (ss/canvas :id :map
               ;; :background "#"
-              :paint (paint 100 100 points)
+              :paint (paint 500 500 points 0 0)
               )))
 
 (log/debug "fin")
