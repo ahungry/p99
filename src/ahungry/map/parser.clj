@@ -1,4 +1,4 @@
-(ns ahungry.map.fs
+(ns ahungry.map.parser
   (:require
    [ahungry.fs.logs :as logs]
    [ahungry.fs.zones :as zones]

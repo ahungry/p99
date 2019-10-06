@@ -1,12 +1,12 @@
-(ns ahungry.map.fs-test
+(ns ahungry.map.parser-test
   (:require
    [clojure.test :as t :refer [deftest testing is run-tests]]
-   [ahungry.map.fs :as fs]
+   [ahungry.map.parser :as parser]
    ))
 
 (deftest parse-line []
   (testing "Ensure line parse is as expected."
-    (let [parsed (fs/parse-line "L 1186.0742, -2175.0840, 3.1260,  1215.0065, -2174.9312, 3.1260,  150, 0, 200")]
+    (let [parsed (parser/parse-line "L 1186.0742, -2175.0840, 3.1260,  1215.0065, -2174.9312, 3.1260,  150, 0, 200")]
       (is (= "L" (:t parsed)))
       (is (= "1186.0742" (:x1 parsed)))
       (is (= "-2175.0840" (:y1 parsed)))

@@ -34,7 +34,7 @@
 
 (defn zone->lines
   "Takes a collection of lines that look like those in the
-  ahungry.map.fs/parse-zone response and draws as lines."
+  ahungry.map.parser/parse-zone response and draws as lines."
   [points g2d]
   ;; TODO: Do something with 't' (the type)
   (doseq [{:keys [b g r] :as m} points]

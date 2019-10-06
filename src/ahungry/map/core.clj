@@ -1,6 +1,6 @@
 (ns ahungry.map.core
   (:require
-   [ahungry.map.fs :as fs]
+   [ahungry.map.parser :as parser]
    ))
 
 ;; Some are in brewall (butcher)
@@ -8,7 +8,7 @@
 (defn init-lines
   []
   ;; (fs/parse-current-zone)
-  (fs/parse-zone "ecommons")
+  (parser/parse-zone "ecommons")
   ;; (str
   ;;  ;; "/home/mcarter/Downloads/brewall/"
   ;;  ;; "/home/mcarter/src/ahungry-map/res/maps/"
