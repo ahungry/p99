@@ -37,16 +37,20 @@
   ahungry.map.parser/parse-zone response and draws as lines."
   [points g2d]
   ;; TODO: Do something with 't' (the type)
-  (doseq [{:keys [b g r] :as m} points]
+  (doseq [{:keys [b g r t] :as m} points]
     (try
-      (ssg/draw g2d
-                (line->polygon (scale-data m))
-                (ssg/style :foreground java.awt.Color/BLACK
-                           :background (ssc/color (read-string r)
-                                                  (read-string g)
-                                                  (read-string b))
-                           :stroke (ssg/stroke :width 1))
-                )
+      (when (= "L" t)
+        (ssg/draw g2d
+                  (line->polygon (scale-data m))
+                  (ssg/style :foreground java.awt.Color/BLACK
+                             :background (ssc/color (read-string r)
+                                                    (read-string g)
+                                                    (read-string b))
+                             :stroke (ssg/stroke :width 1))
+                  ))
+      ;; TODO Render the fonts
+      (when (= "P" t)
+        (prn "Render a string at x1 y1: " (str g)))
       ;; Bunch of NPE happening here, hm...
       (catch Exception e (log/error (str e))))
     ))
