@@ -54,25 +54,27 @@
                   ))
       ;; TODO Render the fonts
       (when (= "P" t)
-        (prn "Render a string at x1 y1: " (str g)))
+        ;; (prn "Render a string at x1 y1: " (str g))
+        nil
+        )
       ;; Bunch of NPE happening here, hm...
       (catch Exception e (log/error (str e))))
     ))
 
 (defn paint
-  [x y points player]
+  [offset-x offset-y points player]
   (fn [c g]
-    (log/info c)
-    (log/info g)
     (ssg/push
      g
      ;; Translate to the map offsets we require
-     (ssg/translate g x y)
+     (ssg/translate g offset-x offset-y)
      ;; Draw the map lines
      (zone->lines points g)
      ;; Now draw an indicator for where player should be
      (let [{:keys [x y]} (scale-player player)]
-       (ssg/translate g x y))
+       (log/info x y)
+       ;; Oh yes, player coords are inverted.  Wonderful.
+       (ssg/translate g (* -1 x) (* -1 y)))
      (ssg/draw g star
                (ssg/style :foreground java.awt.Color/BLACK
                           :background java.awt.Color/YELLOW))

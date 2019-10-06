@@ -63,7 +63,8 @@
    :paint (gui.map/paint
            x y
            @map.core/world-map
-           (map.core/player))))
+           (map.core/player)
+           )))
 
 (defn show-map []
   (show (gui.map/make @map.core/world-map)))
