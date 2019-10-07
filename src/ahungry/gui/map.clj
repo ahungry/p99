@@ -85,7 +85,7 @@
   ([points]
    (ss/canvas :id :map
               ;; :background "#"
-              :paint (paint 500 500 points 0 0)
+              :paint (paint 500 500 points {:x "0" :y "0"})
               )))
 
 (log/debug "fin")
