@@ -35,22 +35,22 @@
 (declare move-star)
 
 (defn zoom-in []
-  (swap! *state update-in [:scale] #(min (+ % 0.1) 2)))
+  (swap! *state update-in [:scale] #(min (+ % 0.05) 2)))
 
 (defn zoom-out []
-  (swap! *state update-in [:scale] #(max (- % 0.1) 0.1)))
+  (swap! *state update-in [:scale] #(max (- % 0.05) 0.1)))
 
 (defn move-left []
-  (swap! *state update-in [:x] #(+ % 10)))
+  (swap! *state update-in [:x] #(+ % 50)))
 
 (defn move-right []
-  (swap! *state update-in [:x] #(- % 10)))
+  (swap! *state update-in [:x] #(- % 50)))
 
 (defn move-down []
-  (swap! *state update-in [:y] #(- % 10)))
+  (swap! *state update-in [:y] #(- % 50)))
 
 (defn move-up []
-  (swap! *state update-in [:y] #(- % 10)))
+  (swap! *state update-in [:y] #(+ % 50)))
 
 (defn redraw-loop []
   (when (:redraw-loop @*state)
@@ -60,6 +60,13 @@
            (while true
              (Thread/sleep 500)
              (move-star)))))
+
+(defn move-reset []
+  (swap! *state (fn [m]
+                  (-> m
+                      (assoc-in [:x] 500)
+                      (assoc-in [:y] 500)
+                      (assoc-in [:scale] 0.1)))))
 
 (listeners/init!
  ;; Keybinds
@@ -74,6 +81,7 @@
   "l" #'move-right
   "j" #'move-down
   "k" #'move-up
+  "r" #'move-reset
   }
  )
 
