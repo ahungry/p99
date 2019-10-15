@@ -27,6 +27,42 @@
 (defn foo [] (prn "called foo from gui"))
 (defn bar [] (prn "called bar again from gui"))
 
+(def *state (atom {:x 500
+                   :y 500
+                   :scale 0.1
+                   :redraw-loop nil}))
+
+(declare move-star)
+
+(defn zoom-in []
+  (swap! *state update-in [:scale] #(+ % 0.1))
+  ;; (move-star)
+  )
+
+(defn zoom-out []
+  (swap! *state update-in [:scale] #(- % 0.1))
+  ;; (move-star)
+  )
+
+(defn move-left []
+  (swap! *state update-in [:x] #(+ % 10))
+  ;; (move-star)
+  )
+
+(defn move-right []
+  (swap! *state update-in [:x] #(- % 10))
+  ;; (move-star)
+  )
+
+(defn redraw-loop []
+  (when (:redraw-loop @*state)
+    (future-cancel (:redraw-loop @*state)))
+  (swap! *state assoc-in [:redraw-loop]
+         (future
+           (while true
+             (Thread/sleep 500)
+             (move-star)))))
+
 (listeners/init!
  ;; Keybinds
  {
@@ -34,6 +70,10 @@
   "b" #'foo
   "C-b" #'bar
   "C-c" #'bar
+  "i" #'zoom-in
+  "o" #'zoom-out
+  "h" #'move-left
+  "l" #'move-right
   }
  )
 
@@ -68,10 +108,6 @@
                   :laf (gui.laf/make)
                   }))
 
-(def *state (atom {:x 500
-                   :y 500
-                   :scale 0.1}))
-
 ;; TODO: This will probably become the way we keep redrawing the map
 (defn move-star
   ([] (move-star (:x @*state)
@@ -105,16 +141,19 @@
     ;;  :content (make-canvas-panel2)}
     ]))
 
+;; FIXME: Most this probably belongs in a function so it doesn't run during tests.
 (def x (make))
 (reset! *root x)
 (defn set-root! [x] (reset! *root x) x)
 (.setFocusTraversalKeysEnabled x false)
 
+(redraw-loop)
+
 (defn main [& args]
   (ss/invoke-later
    (->
     (ss/frame
-     :title "Seesaw Substance/Insubstantial Example"
+     :title "Ahungry Map"
      :minimum-size [640 :by 480]
      :menubar (make-menu)
      :on-close :exit

@@ -72,7 +72,7 @@
      (zone->lines points g)
      ;; Now draw an indicator for where player should be
      (let [{:keys [x y]} (scale-player player)]
-       (log/info x y)
+       ;; (log/info x y)
        ;; Oh yes, player coords are inverted.  Wonderful.
        (ssg/translate g (* -1 x) (* -1 y)))
      (ssg/draw g star
