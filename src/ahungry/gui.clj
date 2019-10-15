@@ -56,15 +56,25 @@
                   :laf (gui.laf/make)
                   }))
 
+(def *state (atom {:x 500
+                   :y 500
+                   :scale 0.1}))
+
 ;; TODO: This will probably become the way we keep redrawing the map
-(defn move-star [x y]
-  (ss/config!
-   (:map @*nodes)
-   :paint (gui.map/paint
-           x y
-           @map.core/world-map
-           (map.core/player)
-           )))
+(defn move-star
+  ([] (move-star (:x @*state)
+                 (:y @*state)
+                 (:scale @*state)))
+  ([x y] (move-star x y 0.1))
+  ([x y scale]
+   (reset! gui.map/*scale scale)
+   (ss/config!
+    (:map @*nodes)
+    :paint (gui.map/paint
+            x y
+            @map.core/world-map
+            (map.core/player)
+            ))))
 
 (defn show-map []
   (show (gui.map/make @map.core/world-map)))

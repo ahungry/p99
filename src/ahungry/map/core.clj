@@ -8,7 +8,11 @@
 (defn init-lines
   []
   ;; (fs/parse-current-zone)
-  (parser/parse-zone "ecommons")
+  ;; (parser/parse-zone "ecommons")
+  (try
+    (parser/parse-current-zone)
+    (catch Exception e (prn e)
+           (parser/parse-zone "ecommons")))
   ;; (str
   ;;  ;; "/home/mcarter/Downloads/brewall/"
   ;;  ;; "/home/mcarter/src/ahungry-map/res/maps/"
@@ -21,4 +25,4 @@
 
 (def world-map (atom (init-lines)))
 
-(def player parser/get-current-position)
+(def player #'parser/get-current-position)
