@@ -25,4 +25,9 @@
 
 (def world-map (atom (init-lines)))
 
+(defn update-world-map! []
+  (reset! world-map (init-lines)))
+
+(def player-zone #'parser/get-current-zone)
+
 (def player #'parser/get-current-position)

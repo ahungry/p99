@@ -35,24 +35,22 @@
 (declare move-star)
 
 (defn zoom-in []
-  (swap! *state update-in [:scale] #(+ % 0.1))
-  ;; (move-star)
-  )
+  (swap! *state update-in [:scale] #(min (+ % 0.1) 2)))
 
 (defn zoom-out []
-  (swap! *state update-in [:scale] #(- % 0.1))
-  ;; (move-star)
-  )
+  (swap! *state update-in [:scale] #(max (- % 0.1) 0.1)))
 
 (defn move-left []
-  (swap! *state update-in [:x] #(+ % 10))
-  ;; (move-star)
-  )
+  (swap! *state update-in [:x] #(+ % 10)))
 
 (defn move-right []
-  (swap! *state update-in [:x] #(- % 10))
-  ;; (move-star)
-  )
+  (swap! *state update-in [:x] #(- % 10)))
+
+(defn move-down []
+  (swap! *state update-in [:y] #(- % 10)))
+
+(defn move-up []
+  (swap! *state update-in [:y] #(- % 10)))
 
 (defn redraw-loop []
   (when (:redraw-loop @*state)
@@ -74,6 +72,8 @@
   "o" #'zoom-out
   "h" #'move-left
   "l" #'move-right
+  "j" #'move-down
+  "k" #'move-up
   }
  )
 
@@ -115,7 +115,13 @@
                  (:scale @*state)))
   ([x y] (move-star x y 0.1))
   ([x y scale]
+   ;; Ensure we push down proper scale.
    (reset! gui.map/*scale scale)
+   ;; See if we switched zones.
+   (when-not (= (:zone @*state)
+                (map.core/player-zone))
+     (map.core/update-world-map!)
+     (swap! *state assoc-in [:zone] (map.core/player-zone)))
    (ss/config!
     (:map @*nodes)
     :paint (gui.map/paint
