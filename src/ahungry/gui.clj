@@ -141,15 +141,17 @@
     ;;  :content (make-canvas-panel2)}
     ]))
 
-;; FIXME: Most this probably belongs in a function so it doesn't run during tests.
 (def x (make))
 (reset! *root x)
 (defn set-root! [x] (reset! *root x) x)
 (.setFocusTraversalKeysEnabled x false)
 
-(redraw-loop)
+;; FIXME: Most this probably belongs in a function so it doesn't run during tests.
+(defn boot []
+  (redraw-loop))
 
 (defn main [& args]
+  (boot)
   (ss/invoke-later
    (->
     (ss/frame
