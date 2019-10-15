@@ -23,7 +23,19 @@
 ;; Tries to match styles to native host some
 (ss/native!)
 (set! *warn-on-reflection* false)
-(listeners/init!)
+
+(defn foo [] (prn "called foo from gui"))
+(defn bar [] (prn "called bar again from gui"))
+
+(listeners/init!
+ ;; Keybinds
+ {
+  "a" #'foo
+  "b" #'foo
+  "C-b" #'bar
+  "C-c" #'bar
+  }
+ )
 
 (def *root (atom nil))
 

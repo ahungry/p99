@@ -6,12 +6,17 @@
 
 (log/debug "start")
 
+(def *keymap (atom {}))
+
 (defn dispatch-event [^java.awt.event.KeyEvent e]
   (try
     (let [id (.getID e)]
       (cond
         (= id java.awt.event.KeyEvent/KEY_PRESSED)
-        ((keys/handle-key-pressed keys/global-keymap) e)
+        ((keys/handle-key-pressed
+          @*keymap
+          ;; keys/global-keymap
+          ) e)
 
         (= id java.awt.event.KeyEvent/KEY_RELEASED)
         (keys/handle-key-released e)
@@ -37,7 +42,7 @@
 
 (defn init!
   "Just a stub for now - nothing needs to be done delayed."
-  []
-  nil)
+  [keymap]
+  (reset! *keymap keymap))
 
 (log/debug "fin")
