@@ -2,6 +2,7 @@ South Qeynos;qeynos
 North Qeynos;qeynos2
 The Surefall Glade;qrg
 The Qeynos Hills;qeytoqrg
+Qeynos Hills;qeytoqrg
 Highpass Hold;highpass
 High Keep;highkeep
 North Freeport;freportn
