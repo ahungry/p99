@@ -1,3 +1,4 @@
+an Arena (PvP) area;qeynos
 South Qeynos;qeynos
 North Qeynos;qeynos2
 The Surefall Glade;qrg
