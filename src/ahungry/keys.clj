@@ -19,10 +19,15 @@
 ;; 39 - ARROW_RIGHT
 ;; 40 - ARROW_DOWN
 
-(def *modkeys (atom {:ctrl nil
-                     :meta nil
-                     :shift nil
-                     :super nil}))
+(def modkeys-default {:ctrl nil
+                      :meta nil
+                      :shift nil
+                      :super nil})
+
+(def *modkeys (atom modkeys-default))
+
+(defn reset-modkeys! []
+  (reset! *modkeys modkeys-default))
 
 (defn init!
   "Resets atom state."

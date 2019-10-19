@@ -46,8 +46,8 @@
       (when (= "L" t)
         (ssg/draw g2d
                   (line->polygon (scale-data m))
-                  (ssg/style :foreground java.awt.Color/BLACK
-                             :background (ssc/color (read-string r)
+                  (ssg/style :background java.awt.Color/BLACK
+                             :foreground (ssc/color (read-string r)
                                                     (read-string g)
                                                     (read-string b))
                              :stroke (ssg/stroke :width 1))
@@ -85,6 +85,7 @@
   ([points]
    (ss/canvas :id :map
               ;; :background "#"
+              :background java.awt.Color/BLACK
               :paint (paint 500 500 points {:x "0" :y "0"})
               )))
 

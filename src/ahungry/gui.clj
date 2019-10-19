@@ -58,6 +58,7 @@
   (swap! *state assoc-in [:redraw-loop]
          (future
            (while true
+             (keys/reset-modkeys!)
              (Thread/sleep 500)
              (move-star)))))
 
