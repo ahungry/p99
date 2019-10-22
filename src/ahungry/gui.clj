@@ -35,10 +35,10 @@
 (declare move-star)
 
 (defn zoom-in []
-  (swap! *state update-in [:scale] #(min (+ % 0.05) 2)))
+  (swap! *state update-in [:scale] #(min (+ % 0.05) 5)))
 
 (defn zoom-out []
-  (swap! *state update-in [:scale] #(max (- % 0.05) 0.1)))
+  (swap! *state update-in [:scale] #(max (- % 0.05) 0.01)))
 
 (defn move-left []
   (swap! *state update-in [:x] #(+ % 50)))
