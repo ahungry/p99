@@ -29,6 +29,10 @@
 (defn get-content-of-newest-file []
   (slurp (get-newest-log)))
 
+(defn s->lines [s] (clojure.string/split s #"\r\n"))
+
+(def get-lines-of-newest-file (comp s->lines get-content-of-newest-file))
+
 (defn get-player-info
   "Extract the player name and the server they're on."
   ([] (get-player-info (get-newest-log)))
@@ -37,3 +41,14 @@
         (re-matches #".*eqlog_(.*?)_(.*?)\..*")
         rest
         (zipmap [:name :server]))))
+
+(defn you->player [player-name s]
+  (clojure.string/replace s #"You auction" (str player-name " auctions")))
+
+(defn get-auctions
+  "Pull the known auction lines and send them out perhaps."
+  ([player-name] (get-auctions player-name (get-lines-of-newest-file)))
+  ([player-name lines]
+   (->> lines
+        (filter #(re-matches #".*auction.*" %))
+        (map (partial you->player player-name)))))
