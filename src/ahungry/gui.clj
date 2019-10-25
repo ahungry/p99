@@ -52,14 +52,15 @@
 (defn move-up []
   (swap! *state update-in [:y] #(+ % 50)))
 
-(def ^:dynamic *sleep-delay* 1000)
+(def ^:dynamic *redraw-loop* true)
+(def ^:dynamic *sleep-delay* 500)
 
 (defn redraw-loop []
   (when (:redraw-loop @*state)
     (future-cancel (:redraw-loop @*state)))
   (swap! *state assoc-in [:redraw-loop]
          (future
-           (while true
+           (while *redraw-loop*
              (keys/reset-modkeys!)
              (Thread/sleep *sleep-delay*)
              (move-star)))))
