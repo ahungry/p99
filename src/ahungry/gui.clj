@@ -52,6 +52,8 @@
 (defn move-up []
   (swap! *state update-in [:y] #(+ % 50)))
 
+(def ^:dynamic *sleep-delay* 1000)
+
 (defn redraw-loop []
   (when (:redraw-loop @*state)
     (future-cancel (:redraw-loop @*state)))
@@ -59,7 +61,7 @@
          (future
            (while true
              (keys/reset-modkeys!)
-             (Thread/sleep 500)
+             (Thread/sleep *sleep-delay*)
              (move-star)))))
 
 (defn move-reset []
@@ -113,7 +115,9 @@
 (def *nodes (atom {}))
 
 (defn set-nodes! []
-  (reset! *nodes {:map (gui.map/make @map.core/world-map)
+  (reset! *nodes {:map (gui.map/make
+                        @map.core/world-map
+                        (map.core/player-zone-name))
                   :laf (gui.laf/make)
                   }))
 
@@ -132,7 +136,7 @@
      (map.core/update-world-map!)
      (swap! *state assoc-in [:zone] (map.core/player-zone)))
    (ss/config!
-    (:map @*nodes)
+    (ss/select (:map @*nodes) [:#map])
     :paint (gui.map/paint
             x y
             @map.core/world-map

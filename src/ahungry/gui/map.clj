@@ -81,12 +81,17 @@
      )))
 
 (defn make
-  ([] (make []))
-  ([points]
-   (ss/canvas :id :map
-              ;; :background "#"
-              :background java.awt.Color/BLACK
-              :paint (paint 500 500 points {:x "0" :y "0"})
-              )))
+  ([] (make [] "?"))
+  ([points] (make points "?"))
+  ([points zone-name]
+   (ss/vertical-panel
+    :items
+    [
+     (ss/label :text zone-name)
+     (ss/canvas :id :map
+                ;; :background "#"
+                :background java.awt.Color/BLACK
+                :paint (paint 500 500 points {:x "0" :y "0"})
+                )])))
 
 (log/debug "fin")

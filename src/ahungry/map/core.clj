@@ -28,6 +28,7 @@
 (defn update-world-map! []
   (reset! world-map (init-lines)))
 
+(def player-zone-name #'parser/get-last-entered-zone)
 (def player-zone #'parser/get-current-zone)
 
 (def player #'parser/get-current-position)
