@@ -28,3 +28,12 @@
 
 (defn get-content-of-newest-file []
   (slurp (get-newest-log)))
+
+(defn get-player-info
+  "Extract the player name and the server they're on."
+  ([] (get-player-info (get-newest-log)))
+  ([newest-log]
+   (->> newest-log
+        (re-matches #".*eqlog_(.*?)_(.*?)\..*")
+        rest
+        (zipmap [:name :server]))))
