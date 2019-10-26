@@ -14,6 +14,7 @@
    [ahungry.gui.laf :as gui.laf]
    [ahungry.gui.map :as gui.map]
    [ahungry.map.core :as map.core]
+   [ahungry.auctions.core :as auction]
    )
   (:import org.pushingpixels.substance.api.SubstanceCortex$GlobalScope)
   (:gen-class))
@@ -51,6 +52,18 @@
 
 (defn move-up []
   (swap! *state update-in [:y] #(+ % 50)))
+
+(def ^:dynamic *auction-loop* true)
+(def ^:dynamic *auction-delay* 30000)
+
+(defn auction-loop []
+  (when (:auction-loop @*state)
+    (future-cancel (:auction-loop @*state)))
+  (swap! *state assoc-in [:auction-loop]
+         (future
+           (while *auction-loop*
+             (Thread/sleep *auction-delay*)
+             (auction/post-auctions)))))
 
 (def ^:dynamic *redraw-loop* true)
 (def ^:dynamic *sleep-delay* 500)
@@ -168,6 +181,7 @@
 
 ;; FIXME: Most this probably belongs in a function so it doesn't run during tests.
 (defn boot []
+  (auction-loop)
   (redraw-loop))
 
 (defn main [& args]
