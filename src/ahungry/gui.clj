@@ -55,6 +55,8 @@
 
 (def ^:dynamic *auction-loop* true)
 (def ^:dynamic *auction-delay* 30000)
+(def ^:dynamic *redraw-loop* true)
+(def ^:dynamic *sleep-delay* 3000)
 
 (defn auction-loop []
   (when (:auction-loop @*state)
@@ -64,9 +66,6 @@
            (while *auction-loop*
              (Thread/sleep *auction-delay*)
              (auction/post-auctions)))))
-
-(def ^:dynamic *redraw-loop* true)
-(def ^:dynamic *sleep-delay* 500)
 
 (defn redraw-loop []
   (when (:redraw-loop @*state)
@@ -183,6 +182,9 @@
 (defn boot []
   (auction-loop)
   (redraw-loop))
+
+(defn foo []
+  (+ 3 4 5))
 
 (defn main [& args]
   (boot)
