@@ -1,6 +1,31 @@
 ;; Code related to finding the proper log files to work with for various features.
 
-(ns ahungry.fs.logs)
+(ns ahungry.fs.logs
+  (:require
+   [clojure.core.async :refer [chan pub sub >!! >! <!! <! go-loop]]))
+
+;; Redefining the pub / sub seems to clear out the stuff you might not want to do with it.
+;; Sending messages in
+(def input-chan (chan))
+(def our-pub (pub input-chan :msg-type))
+
+;; Try it
+(>!! input-chan {:msg-type :greeting :text "Hello"})
+
+;; Getting messages out
+(def output-chan (chan))
+(sub our-pub :greeting output-chan)
+
+(defn do-go-loop []
+  (go-loop []
+    (let [{:keys [text]} (<! output-chan)]
+      (println text)
+      (prn "yo!")
+      (recur))))
+
+(do-go-loop)
+
+(>!! input-chan {:msg-type :greeting :text "hiya"})
 
 (defn get-resource-dir
   "Return the current resource (res/) directory."

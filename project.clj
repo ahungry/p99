@@ -5,6 +5,8 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [
                  [org.clojure/clojure "1.10.0"]
+                 ;; TODO: Ensure java 8 compat
+                 [org.clojure/core.async "0.4.500"]
                  [seesaw "1.5.0"]
 
                  ;; Latest versions, but only work with java 9+
