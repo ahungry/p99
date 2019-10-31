@@ -12,10 +12,29 @@
    )
   (:gen-class))
 
+(def *state (atom {:slain []}))
+
 (defn make-labels []
   (ss/vertical-panel
+   :id :slain
    :items (map (partial ss/button :text)
-               ["An orc" "A kobold"])))
+               (:slain @*state)
+               ;; ["An orc" "A kobold"]
+               )))
+
+(def slain-labels (make-labels))
+
+(defn ack-slain [{:keys [name]}]
+  (when name
+    (swap! *state update-in [:slain] conj name)
+    (ss/config!
+     (ss/select slain-labels [:#slain])
+     :items (map (partial ss/button :text) (:slain @*state)))
+    nil
+    ))
+
+(listen :slain #'ack-slain)
+
 
 (defn make []
   (ss/border-panel
@@ -26,6 +45,6 @@
             :items
             [
              :separator
-             (ss/scrollable (make-labels))
+             (ss/scrollable slain-labels)
              :separator
              ])))

@@ -13,6 +13,7 @@
    [ahungry.gui.show :refer [show]]
    [ahungry.gui.laf :as gui.laf]
    [ahungry.gui.map :as gui.map]
+   [ahungry.gui.timers :as gui.timers]
    [ahungry.map.core :as map.core]
    [ahungry.auctions.core :as auction]
    )
@@ -132,6 +133,7 @@
                         @map.core/world-map
                         (map.core/player-zone-name))
                   :laf (gui.laf/make)
+                  :timers (gui.timers/make)
                   }))
 
 ;; TODO: This will probably become the way we keep redrawing the map
@@ -165,6 +167,7 @@
    :tabs
    [
     {:title "Map" :content (:map @*nodes)}
+    {:title "Timers" :content (:timers @*nodes)}
     {:title "Look and Feel" :content (:laf @*nodes)}
     ;; {:title "Switchable Canvas" :content (make-switchable-canvas)}
     ;; {:title "Paint1" :content (make-canvas-panel)}

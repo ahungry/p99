@@ -53,4 +53,3 @@
   )
 
 (listen :read-line #'line-handler)
-(listen :slain (fn [m] (log/info "Oh snap! Someone was slain!" m)))
