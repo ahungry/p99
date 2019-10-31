@@ -2,30 +2,7 @@
 
 (ns ahungry.fs.logs
   (:require
-   [clojure.core.async :refer [chan pub sub >!! >! <!! <! go-loop]]))
-
-;; Redefining the pub / sub seems to clear out the stuff you might not want to do with it.
-;; Sending messages in
-(def input-chan (chan))
-(def our-pub (pub input-chan :msg-type))
-
-;; Try it
-(>!! input-chan {:msg-type :greeting :text "Hello"})
-
-;; Getting messages out
-(def output-chan (chan))
-(sub our-pub :greeting output-chan)
-
-(defn do-go-loop []
-  (go-loop []
-    (let [{:keys [text]} (<! output-chan)]
-      (println text)
-      (prn "yo!")
-      (recur))))
-
-(do-go-loop)
-
-(>!! input-chan {:msg-type :greeting :text "hiya"})
+   [ahungry.events :as e :refer [fire listen]]))
 
 (defn get-resource-dir
   "Return the current resource (res/) directory."
@@ -89,6 +66,7 @@
 (defn log-line []
   (let [line (-> (:fh @*log)
                  (.readLine))]
+    (fire :read-line line)
     (swap! *log update-in [:lines] conj line)))
 
 (defn log-print []
@@ -97,6 +75,8 @@
      :line-count (count (:lines m))}))
 
 (defn log-load []
+  (when-not (:fh @*log)
+    (log-open))
   (while (< (log-at)
             (log-len))
     (log-line))
