@@ -10,7 +10,7 @@
 (defn fire
   "Send in a message / payload that we'll publish to one or more listeners."
   [topic m]
-  (>!! input-chan {:msg-type topic :data m}))
+  (future (>!! input-chan {:msg-type topic :data m})))
 
 (defn listen
   "Recv a message / payload that we'll run some function against."
@@ -38,11 +38,19 @@
            (zipmap [:name])))
 
 ;; Chain some events from other events here, sure, why not?
-(defn line-handler [s]
-  (cond (slain? s)
-        (fire :slain (slain? s)))
+(defn line-handler
+  "Dispatch based on line match."
+  [s]
+  (cond
+    ;; If we use fire inside a go block (such as this) bad things!
+    ;; It will block indefinitely essentially.
+    (slain? s) (fire :slain (slain? s))
+    )
+  ;; (cond (slain? s)
+  ;;       (prn (slain? s))
+  ;;       ;; (fire :slain (slain? s))
+  ;;       )
   )
 
-(listen :read-line line-handler)
-
+(listen :read-line #'line-handler)
 (listen :slain (fn [m] (log/info "Oh snap! Someone was slain!" m)))
