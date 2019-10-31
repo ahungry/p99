@@ -12,6 +12,7 @@
    )
   (:gen-class))
 
+;; TODO Track objects not just names (include timers etc.).
 (def *state (atom {:slain []}))
 
 (defn make-labels []
@@ -24,17 +25,17 @@
 
 (def slain-labels (make-labels))
 
+(defn redraw []
+  (ss/config!
+   (ss/select slain-labels [:#slain])
+   :items (map (partial ss/button :text) (:slain @*state))))
+
 (defn ack-slain [{:keys [name]}]
   (when name
     (swap! *state update-in [:slain] conj name)
-    (ss/config!
-     (ss/select slain-labels [:#slain])
-     :items (map (partial ss/button :text) (:slain @*state)))
-    nil
-    ))
+    (redraw)))
 
 (listen :slain #'ack-slain)
-
 
 (defn make []
   (ss/border-panel
