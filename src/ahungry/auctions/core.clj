@@ -7,7 +7,7 @@
    [ahungry.net :as net]))
 
 (defn green? [s]
-  (if (re-find #"(?i)green" s)
+  (if (re-find #"(?i)(green|teal)" s)
     1
     0))
 
