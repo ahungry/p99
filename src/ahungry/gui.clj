@@ -37,10 +37,10 @@
 (declare move-star)
 
 (defn zoom-in []
-  (swap! *state update-in [:scale] #(min (+ % 0.05) 5)))
+  (swap! *state update-in [:scale] #(min (+ % 0.02) 5)))
 
 (defn zoom-out []
-  (swap! *state update-in [:scale] #(max (- % 0.05) 0.01)))
+  (swap! *state update-in [:scale] #(max (- % 0.02) 0.01)))
 
 (defn move-left []
   (swap! *state update-in [:x] #(+ % 50)))
@@ -57,7 +57,7 @@
 (def ^:dynamic *auction-loop* true)
 (def ^:dynamic *auction-delay* 30000)
 (def ^:dynamic *redraw-loop* true)
-(def ^:dynamic *sleep-delay* 2000)
+(def ^:dynamic *sleep-delay* 1000)
 
 (defn auction-loop []
   (when (:auction-loop @*state)
