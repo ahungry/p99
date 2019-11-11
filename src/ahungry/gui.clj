@@ -57,7 +57,7 @@
 (def ^:dynamic *auction-loop* true)
 (def ^:dynamic *auction-delay* 30000)
 (def ^:dynamic *redraw-loop* true)
-(def ^:dynamic *sleep-delay* 1000)
+(def ^:dynamic *sleep-delay* 3000)
 
 (defn auction-loop []
   (when (:auction-loop @*state)
