@@ -9,6 +9,7 @@ High Keep;highkeep
 North Freeport;freportn
 West Freeport;freportw
 East Freeport;freporte
+Runnyeye Citadel;runnyeye
 The Liberated Citadel of Runnyeye;runnyeye
 Liberated Citadel of Runnyeye;runnyeye
 The Western Plains of Karana;qey2hh1
