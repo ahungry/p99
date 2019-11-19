@@ -30,7 +30,6 @@ East Commonlands;ecommons
 The Erudin Palace;erudnint
 Erudin;erudnext
 The Nektulos Forest;nektulos
-The Nektulos Forest;nektulos
 Sunset Home;cshome
 The Lavastorm Mountains;lavastorm
 Lavastorm Mountains;lavastorm
@@ -77,6 +76,7 @@ Northern Felwithe;felwithea
 Southern Felwithe;felwitheb
 The Estate of Unrest;unrest
 Kedge Keep;kedge
+Guk;guktop
 The City of Guk;guktop
 The Ruins of Old Guk;gukbottom
 North Kaladim;kaladimb
