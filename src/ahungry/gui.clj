@@ -199,7 +199,8 @@
      :menubar (make-menu)
      :on-close :exit
      :content
-     (-> (make) set-root!)
+     ;; (-> (make) set-root!)
+     (-> x set-root!)
      )
     ss/pack!
     ss/show!)
