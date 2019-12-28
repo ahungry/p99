@@ -195,7 +195,7 @@
    (->
     (ss/frame
      :title "Ahungry Map"
-     :minimum-size [640 :by 480]
+     :minimum-size [300 :by 300]
      :menubar (make-menu)
      :on-close :exit
      :content
