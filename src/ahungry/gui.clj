@@ -29,8 +29,8 @@
 (defn foo [] (prn "called foo from gui"))
 (defn bar [] (prn "called bar again from gui"))
 
-(def *state (atom {:x 500
-                   :y 500
+(def *state (atom {:x 50
+                   :y 50
                    :scale 0.1
                    :redraw-loop nil}))
 
@@ -81,8 +81,8 @@
 (defn move-reset []
   (swap! *state (fn [m]
                   (-> m
-                      (assoc-in [:x] 500)
-                      (assoc-in [:y] 500)
+                      (assoc-in [:x] 50)
+                      (assoc-in [:y] 50)
                       (assoc-in [:scale] 0.1)))))
 
 (listeners/init!
