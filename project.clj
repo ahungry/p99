@@ -7,6 +7,7 @@
                  [org.clojure/clojure "1.10.0"]
                  ;; TODO: Ensure java 8 compat
                  [org.clojure/core.async "0.4.500"]
+                 [clojure.java-time "0.3.2"]
                  [seesaw "1.5.0"]
 
                  ;; Latest versions, but only work with java 9+

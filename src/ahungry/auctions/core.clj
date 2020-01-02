@@ -3,7 +3,9 @@
    [clj-http.client :as client]
    [cheshire.core :as cheshire]
    [clojure.tools.logging :as log]
+   [java-time :as t]
    [ahungry.fs.logs :as logs]
+   [ahungry.events :as e :refer [fire listen]]
    [ahungry.net :as net]))
 
 (defn green? [s]
@@ -24,9 +26,13 @@
      (->> (logs/get-auctions name)
           (clojure.string/join "\r\n"))}))
 
+(defn get-upload-message []
+  (str "Uploaded auctions to server at: " (t/local-date-time)))
+
 (defn post-auctions
   "Send the auctions to the server, hooray."
   []
+  (fire :event-auctions (get-upload-message))
   (client/post
    "https://ahungry.com/aucDump.php"
    ;; {:body (cheshire/encode (get-auctions-for-player))}

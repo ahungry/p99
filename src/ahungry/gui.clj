@@ -13,6 +13,7 @@
    [ahungry.gui.show :refer [show]]
    [ahungry.gui.laf :as gui.laf]
    [ahungry.gui.map :as gui.map]
+   [ahungry.gui.auctions :as gui.auctions]
    [ahungry.gui.timers :as gui.timers]
    [ahungry.map.core :as map.core]
    [ahungry.auctions.core :as auction]
@@ -132,6 +133,7 @@
   (reset! *nodes {:map (gui.map/make
                         @map.core/world-map
                         (map.core/player-zone-name))
+                  :auctions (gui.auctions/make)
                   :laf (gui.laf/make)
                   :timers (gui.timers/make)
                   }))
@@ -167,6 +169,7 @@
    :tabs
    [
     {:title "Map" :content (:map @*nodes)}
+    {:title "Auction Uploads" :content (:auctions @*nodes)}
     {:title "Timers" :content (:timers @*nodes)}
     {:title "Look and Feel" :content (:laf @*nodes)}
     ;; {:title "Switchable Canvas" :content (make-switchable-canvas)}
