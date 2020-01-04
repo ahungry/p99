@@ -11,14 +11,14 @@
    [ahungry.keys :as keys]
    [ahungry.listeners :as listeners]
    [ahungry.gui.show :refer [show]]
-   [ahungry.gui.laf :as gui.laf]
+   ;; [ahungry.gui.laf :as gui.laf]
    [ahungry.gui.map :as gui.map]
    [ahungry.gui.auctions :as gui.auctions]
    [ahungry.gui.timers :as gui.timers]
    [ahungry.map.core :as map.core]
    [ahungry.auctions.core :as auction]
    )
-  (:import org.pushingpixels.substance.api.SubstanceCortex$GlobalScope)
+  ;; (:import org.pushingpixels.substance.api.SubstanceCortex$GlobalScope)
   (:gen-class))
 
 (log/debug "start")
@@ -134,7 +134,7 @@
                         @map.core/world-map
                         (map.core/player-zone-name))
                   :auctions (gui.auctions/make)
-                  :laf (gui.laf/make)
+                  ;; :laf (gui.laf/make)
                   :timers (gui.timers/make)
                   }))
 
@@ -171,7 +171,7 @@
     {:title "Map" :content (:map @*nodes)}
     {:title "Auction Uploads" :content (:auctions @*nodes)}
     {:title "Timers" :content (:timers @*nodes)}
-    {:title "Look and Feel" :content (:laf @*nodes)}
+    ;; {:title "Look and Feel" :content (:laf @*nodes)}
     ;; {:title "Switchable Canvas" :content (make-switchable-canvas)}
     ;; {:title "Paint1" :content (make-canvas-panel)}
     ;; {:title "Paint2"
@@ -208,7 +208,7 @@
     ss/pack!
     ss/show!)
    ;; Calling this, or setting it via REPL causes some issues...
-   (SubstanceCortex$GlobalScope/setSkin "org.pushingpixels.substance.api.skin.NebulaSkin")
+   ;; (SubstanceCortex$GlobalScope/setSkin "org.pushingpixels.substance.api.skin.NebulaSkin")
    ))
 
 (log/debug "fin")

@@ -1,0 +1,9 @@
+* Substance problem
+Running any of the seesaw updates in clojure threads triggers a
+"component creation on non-main thread" type error event from
+substance.
+
+I don't think its worth the complication of including that package for
+the sake of some fancier GUI styles, at the expense of the extra
+complexity, as seesaw tends to look "good enough" (even if a bit swing
+like).
