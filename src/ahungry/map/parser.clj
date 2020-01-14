@@ -1,6 +1,7 @@
 (ns ahungry.map.parser
   (:require
    [clojure.tools.logging :as log]
+   [ahungry.events :as e :refer [fire listen]]
    [ahungry.fs.logs :as logs]
    [ahungry.fs.zones :as zones]
    )
@@ -50,13 +51,41 @@
          parse-zone-label-from-log-line
          )))
 
-(defn get-last-entered-zone []
+(def *state (atom {
+                   :last-entered-zone ""
+                   :player-position nil
+                   } ))
+
+(defn ack-last-entered-zone [{:keys [name]}]
+  (when name
+    (swap! *state assoc-in [:last-entered-zone] name)))
+
+(listen :ev-last-entered-zone #'ack-last-entered-zone)
+
+(defn ack-player-position [{:keys [x y z] :as m}]
+  (when m
+    (swap! *state assoc-in [:player-position] {:x x :y y :z z})))
+
+(listen :ev-player-position #'ack-player-position)
+
+(defn get-last-entered-zone-from-state []
+  (:last-entered-zone @*state))
+
+(defn get-current-position-from-state []
+  (:player-position @*state))
+
+;; Using the parsing based method, 62ms
+(defn get-last-entered-zone-from-disk []
   (try
     (or (get-last-entered-zone-fast)
         (get-last-entered-zone-slow))
     (catch Exception e
       (log/debug "Error loading in get-last-entered-zone: " e)
       (get-last-entered-zone-slow))))
+
+(defn get-last-entered-zone []
+  (or (get-last-entered-zone-from-state)
+      (get-last-entered-zone-from-disk)))
 
 (defn get-zone-id-from-label [label]
   (let [zl (zones/get-zonelist)]
@@ -79,9 +108,13 @@
   (or (last col) def))
 
 ;; Your Location is 1192.57, -495.48, 3.41
-(defn get-current-position []
+(defn get-current-position-from-disk []
   (let [content (logs/get-lines-of-newest-file)]
     (->> content
          (filter #(re-matches #".*Your Location is.*" %))
          (last-or-default "Your Location is 0, 0, 0")
          parse-position-from-log-line)))
+
+(defn get-current-position []
+  (or (get-current-position-from-state)
+      (get-current-position-from-disk)))

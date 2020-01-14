@@ -2,7 +2,8 @@
 
 (ns ahungry.fs.logs
   (:require
-   [ahungry.events :as e :refer [fire listen]]))
+   [ahungry.events :as e :refer [fire listen]]
+   ))
 
 (defn get-resource-dir
   "Return the current resource (res/) directory."
