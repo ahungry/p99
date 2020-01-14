@@ -29,9 +29,16 @@
    (ss/select auctions-labels [:#auctions])
    :items (map (partial ss/button :text) (:auctions @*state))))
 
+(defn push-to-auc-state
+  "Push a message to top of list, keeping the latest 5."
+  [xs msg]
+  (->>
+   (cons msg xs)
+   (take 5)))
+
 (defn ack-auctions [msg]
   (when msg
-    (swap! *state update-in [:auctions] conj msg)
+    (swap! *state update-in [:auctions] #'push-to-auc-state msg)
     (redraw)))
 
 (listen :ev-auctions #'ack-auctions)
