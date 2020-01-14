@@ -33,32 +33,39 @@
 (def *state (atom {:x 50
                    :y 50
                    :scale 0.1
+                   :moving-star? false
                    :redraw-loop nil}))
 
 (declare move-star)
 
 (defn zoom-in []
-  (swap! *state update-in [:scale] #(min (* % 2) 5)))
+  (swap! *state update-in [:scale] #(min (* % 2) 5))
+  (move-star))
 
 (defn zoom-out []
-  (swap! *state update-in [:scale] #(max (/ % 2) 0.01)))
+  (swap! *state update-in [:scale] #(max (/ % 2) 0.01))
+  (move-star))
 
 (defn move-left []
-  (swap! *state update-in [:x] #(+ % 50)))
+  (swap! *state update-in [:x] #(+ % 50))
+  (move-star))
 
 (defn move-right []
-  (swap! *state update-in [:x] #(- % 50)))
+  (swap! *state update-in [:x] #(- % 50))
+  (move-star))
 
 (defn move-down []
-  (swap! *state update-in [:y] #(- % 50)))
+  (swap! *state update-in [:y] #(- % 50))
+  (move-star))
 
 (defn move-up []
-  (swap! *state update-in [:y] #(+ % 50)))
+  (swap! *state update-in [:y] #(+ % 50))
+  (move-star))
 
 (def ^:dynamic *auction-loop* true)
 (def ^:dynamic *auction-delay* 30000)
 (def ^:dynamic *redraw-loop* true)
-(def ^:dynamic *sleep-delay* 300)
+(def ^:dynamic *sleep-delay* 1000)
 
 (defn auction-loop []
   (when (:auction-loop @*state)
@@ -146,9 +153,13 @@
 
 ;; TODO: This will probably become the way we keep redrawing the map
 (defn move-star
-  ([] (move-star (:x @*state)
-                 (:y @*state)
-                 (:scale @*state)))
+  ([]
+   (when-not (:moving-star? @*state)
+     (swap! *state assoc-in [:moving-star?] true)
+     (move-star (:x @*state)
+                (:y @*state)
+                (:scale @*state))
+     (swap! *state assoc-in [:moving-star?] false)))
   ([x y] (move-star x y 0.1))
   ([x y scale]
    ;; Ensure we push down proper scale.
