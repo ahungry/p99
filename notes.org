@@ -1,4 +1,4 @@
-* Substance problem
+* DONE Substance problem
 Running any of the seesaw updates in clojure threads triggers a
 "component creation on non-main thread" type error event from
 substance.
@@ -8,7 +8,7 @@ the sake of some fancier GUI styles, at the expense of the extra
 complexity, as seesaw tends to look "good enough" (even if a bit swing
 like).
 
-* Need to optimize for the parsing
+* DONE Need to optimize for the parsing
 Currently the full file read can be excruciatingly slow when a file is
 14e6 lines.  A 10 to 20 times speedup is possible by using the
 logs/get-lines-of-newest-file parsing (holds cursor position at end).
@@ -16,3 +16,5 @@ logs/get-lines-of-newest-file parsing (holds cursor position at end).
 However, we can probably get this to be even faster if we use the
 event stuff to push an event (like we do auction) when particular
 lines are found.
+
+This was done, it is looking pretty good.
