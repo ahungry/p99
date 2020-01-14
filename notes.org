@@ -7,3 +7,12 @@ I don't think its worth the complication of including that package for
 the sake of some fancier GUI styles, at the expense of the extra
 complexity, as seesaw tends to look "good enough" (even if a bit swing
 like).
+
+* Need to optimize for the parsing
+Currently the full file read can be excruciatingly slow when a file is
+14e6 lines.  A 10 to 20 times speedup is possible by using the
+logs/get-lines-of-newest-file parsing (holds cursor position at end).
+
+However, we can probably get this to be even faster if we use the
+event stuff to push an event (like we do auction) when particular
+lines are found.

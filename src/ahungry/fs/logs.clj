@@ -39,6 +39,8 @@
         fh (java.io.RandomAccessFile. filename "r")]
     fh))
 
+(def ^:dynamic *log-open-bytes-back* (* 1024 1024))
+
 (defn log-open
   "Open up the log file, with the cursor set towards the end of file.
 
@@ -48,7 +50,7 @@
     (.close (:fh @*log)))
   (let [fh (raf)
         len (.length fh)
-        byte-offset (max 0 (- len 10000))]
+        byte-offset (max 0 (- len *log-open-bytes-back*))]
     (.seek fh byte-offset)
     (reset! *log {
                   :fh fh

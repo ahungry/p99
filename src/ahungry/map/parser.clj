@@ -1,5 +1,6 @@
 (ns ahungry.map.parser
   (:require
+   [clojure.tools.logging :as log]
    [ahungry.fs.logs :as logs]
    [ahungry.fs.zones :as zones]
    )
@@ -28,12 +29,34 @@
 (defn parse-zone-label-from-log-line [s]
   (last (re-find #".*You have entered (.*)\." s)))
 
-(defn get-last-entered-zone []
+(defn get-last-entered-zone-slow
+  "This is a slower way to get the zone, it parses
+  all lines in the file."
+  []
   (let [content (logs/get-content-of-newest-file)]
     (->> (clojure.string/split content #"\r\n")
          (filter #(re-matches #".*You have entered (.*)\." %))
          last
          parse-zone-label-from-log-line)))
+
+(defn get-last-entered-zone-fast
+  "This is the faster way to get the zone, but could end up
+  not finding a match."
+  []
+  (let [content (logs/get-lines-of-newest-file)]
+    (->> content
+         (filter #(re-matches #".*You have entered (.*)\." %))
+         last
+         parse-zone-label-from-log-line
+         )))
+
+(defn get-last-entered-zone []
+  (try
+    (or (get-last-entered-zone-fast)
+        (get-last-entered-zone-slow))
+    (catch Exception e
+      (log/debug "Error loading in get-last-entered-zone: " e)
+      (get-last-entered-zone-slow))))
 
 (defn get-zone-id-from-label [label]
   (let [zl (zones/get-zonelist)]
@@ -57,8 +80,8 @@
 
 ;; Your Location is 1192.57, -495.48, 3.41
 (defn get-current-position []
-  (let [content (logs/get-content-of-newest-file)]
-    (->> (clojure.string/split content #"\r\n")
+  (let [content (logs/get-lines-of-newest-file)]
+    (->> content
          (filter #(re-matches #".*Your Location is.*" %))
          (last-or-default "Your Location is 0, 0, 0")
          parse-position-from-log-line)))

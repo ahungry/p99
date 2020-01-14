@@ -113,15 +113,21 @@
   (ss/alert "Hello"))
 
 (defn make-menu []
-  (let [a-test (ssa/action :handler a-test :name "Test" :tip "Pop up an alert" :key "menu A")
-        tab1 (ssa/action :handler (fn [_e] (ss/selection! @*root 0))
-                         :name "Select Tab 0"
-                         :tip "Jump to tab 0."
-                         :key "menu 1")
-        tab2 (ssa/action :handler (fn [_e] (ss/selection! @*root 1))
-                         :name "Select Tab 1"
-                         :tip "Jump to tab 1."
-                         :key "menu 2")
+  (let [a-test (ssa/action
+                :handler a-test
+                :name "Test"
+                :tip "Pop up an alert"
+                :key "menu A")
+        tab1 (ssa/action
+              :handler (fn [_e] (ss/selection! @*root 0))
+              :name "Select Tab 0"
+              :tip "Jump to tab 0."
+              :key "menu 1")
+        tab2 (ssa/action
+              :handler (fn [_e] (ss/selection! @*root 1))
+              :name "Select Tab 1"
+              :tip "Jump to tab 1."
+              :key "menu 2")
         ]
     (ss/menubar
      :items [(ss/menu :text "File" :items [a-test])
@@ -148,17 +154,19 @@
    ;; Ensure we push down proper scale.
    (reset! gui.map/*scale scale)
    ;; See if we switched zones.
-   (when-not (= (:zone @*state)
-                (map.core/player-zone))
-     (map.core/update-world-map!)
-     (swap! *state assoc-in [:zone] (map.core/player-zone)))
+   (let [in-zone (map.core/player-zone)]
+     (when-not (= (:zone @*state)
+                  in-zone)
+       (map.core/update-world-map!)
+       (swap! *state assoc-in [:zone] in-zone)))
    (ss/config!
     (ss/select (:map @*nodes) [:#map])
-    :paint (gui.map/paint
-            x y
-            @map.core/world-map
-            (map.core/player)
-            ))))
+    :paint
+    (gui.map/paint
+     x y
+     @map.core/world-map
+     (map.core/player)
+     ))))
 
 (defn show-map []
   (show (gui.map/make @map.core/world-map)))
