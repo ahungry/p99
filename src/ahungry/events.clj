@@ -24,11 +24,11 @@
         (f data)
         (recur)))))
 
-(listen :foo prn)
-(listen :foo (fn [x] (prn "Hello from the second one" x)))
+(listen :ev-foo prn)
+(listen :ev-foo (fn [x] (prn "Hello from the second one" x)))
 
 ;; Called first, it only runs code from the initial listen
-(fire :foo 44)
+(fire :ev-foo 44)
 ;; If I call a second time, it then runs the second function
 
 ;; TODO: Maybe source these via the gui?  Some type of triggers user wants.
@@ -44,12 +44,12 @@
   (cond
     ;; If we use fire inside a go block (such as this) bad things!
     ;; It will block indefinitely essentially.
-    (slain? s) (fire :slain (slain? s))
+    (slain? s) (fire :ev-slain (slain? s))
     )
   ;; (cond (slain? s)
   ;;       (prn (slain? s))
-  ;;       ;; (fire :slain (slain? s))
+  ;;       ;; (fire :ev-slain (slain? s))
   ;;       )
   )
 
-(listen :read-line #'line-handler)
+(listen :ev-read-line #'line-handler)

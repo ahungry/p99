@@ -68,7 +68,7 @@
 (defn log-line []
   (let [line (-> (:fh @*log)
                  (.readLine))]
-    (fire :read-line line)
+    (fire :ev-read-line line)
     (swap! *log update-in [:lines] conj line)))
 
 (defn log-print []

@@ -32,7 +32,7 @@
 (defn post-auctions
   "Send the auctions to the server, hooray."
   []
-  (fire :event-auctions (get-upload-message))
+  (fire :ev-auctions (get-upload-message))
   (client/post
    "https://ahungry.com/aucDump.php"
    ;; {:body (cheshire/encode (get-auctions-for-player))}

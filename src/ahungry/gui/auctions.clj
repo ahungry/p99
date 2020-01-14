@@ -34,7 +34,7 @@
     (swap! *state update-in [:auctions] conj msg)
     (redraw)))
 
-(listen :event-auctions #'ack-auctions)
+(listen :ev-auctions #'ack-auctions)
 
 (defn make []
   (ss/border-panel

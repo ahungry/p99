@@ -35,7 +35,7 @@
     (swap! *state update-in [:slain] conj name)
     (redraw)))
 
-(listen :slain #'ack-slain)
+(listen :ev-slain #'ack-slain)
 
 (defn make []
   (ss/border-panel
