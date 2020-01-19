@@ -57,6 +57,7 @@ The Qeynos Aqueduct System;qcat
 Innothule Swamp;innothule
 The Feerrott;feerrott
 Accursed Temple of CazicThule;cazicthule
+Lost Temple of Cazic-Thule;cazicthule
 Oggok;oggok
 The Rathe Mountains;rathemtn
 Rathe Mountains;rathemtn
