@@ -62,10 +62,23 @@
   (swap! *state update-in [:y] #(+ % 50))
   (move-star))
 
+(def ^:dynamic *log-loop* true)
+(def ^:dynamic *log-delay* 500)
 (def ^:dynamic *auction-loop* true)
 (def ^:dynamic *auction-delay* 30000)
 (def ^:dynamic *redraw-loop* true)
 (def ^:dynamic *sleep-delay* 1000)
+
+(defn log-load-loop
+  "Keep the incoming log data fresh."
+  []
+  (when (:log-loop @*state)
+    (future-cancel (:log-loop @*state)))
+  (swap! *state assoc-in [:log-loop]
+        (future
+          (while *log-loop*
+            (Thread/sleep *log-delay*)
+            (ahungry.fs.logs/log-load)))))
 
 (defn auction-loop []
   (when (:auction-loop @*state)
@@ -203,8 +216,8 @@
 (defn set-root! [x] (reset! *root x) x)
 (.setFocusTraversalKeysEnabled x false)
 
-;; FIXME: Most this probably belongs in a function so it doesn't run during tests.
 (defn boot []
+  (log-load-loop)
   (auction-loop)
   (redraw-loop))
 

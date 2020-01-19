@@ -77,8 +77,11 @@ Southern Felwithe;felwitheb
 The Estate of Unrest;unrest
 Kedge Keep;kedge
 Guk;guktop
+Upper Guk;guktop
 The City of Guk;guktop
+Lower Guk;gukbottom
 The Ruins of Old Guk;gukbottom
+Ruins of Old Guk;gukbottom
 North Kaladim;kaladimb
 Butcherblock Mountains;butcher
 Ocean of Tears;oot

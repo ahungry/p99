@@ -91,7 +91,7 @@
      (ss/canvas :id :map
                 ;; :background "#"
                 :background java.awt.Color/BLACK
-                :paint (paint 500 500 points {:x "0" :y "0"})
+                :paint (paint 300 300 points {:x "0" :y "0"})
                 )])))
 
 (log/debug "fin")

@@ -12,7 +12,7 @@
    (ss/invoke-later
     (->
      (ss/frame
-      :minimum-size [640 :by 480]
+      :minimum-size [300 :by 300]
       :title "Widget"
       :content f)
      ;; add-behaviors
@@ -23,7 +23,7 @@
    (ss/invoke-later
     (->
      (ss/frame
-      :minimum-size [640 :by 480]
+      :minimum-size [300 :by 300]
       :menubar menu
       :title "Widget"
       :content f)

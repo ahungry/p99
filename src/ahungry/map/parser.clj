@@ -20,8 +20,11 @@
        (zipmap [:t :x1 :y1 :z1 :x2 :y2 :z2 :r :g :b :a :label])))
 
 (defn parse-map-lines [file-content]
-  (->> (clojure.string/split file-content #"\r\n")
-       (map parse-line)))
+  (->>
+   (->
+    (clojure.string/replace file-content #"\r" "")
+    (clojure.string/split #"\n"))
+   (map parse-line)))
 
 (defn parse-zone [zone]
   (-> (zones/load-map zone)
