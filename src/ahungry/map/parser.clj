@@ -27,8 +27,9 @@
    (map parse-line)))
 
 (defn parse-zone [zone]
-  (-> (zones/load-map zone)
-      parse-map-lines))
+  (when zone
+    (-> (zones/load-map zone)
+        parse-map-lines)))
 
 (defn parse-zone-label-from-log-line [s]
   (last (re-find #".*You have entered (.*)\." s)))

@@ -27,7 +27,11 @@
           (clojure.string/join "\r\n"))}))
 
 (defn get-upload-message []
-  (str "Uploaded auctions to server at: " (t/local-date-time)))
+  (let [{:keys [name server]} (logs/get-player-info)]
+    (str "Uploaded auctions to server at: "
+         (t/local-date-time)
+         " for user @ serve "
+         name server)))
 
 (defn post-auctions
   "Send the auctions to the server, hooray."

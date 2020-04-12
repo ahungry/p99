@@ -24,11 +24,11 @@
         (f data)
         (recur)))))
 
-(listen :ev-foo prn)
-(listen :ev-foo (fn [x] (prn "Hello from the second one" x)))
+;; (listen :ev-foo prn)
+;; (listen :ev-foo (fn [x] (prn "Hello from the second one" x)))
 
 ;; Called first, it only runs code from the initial listen
-(fire :ev-foo 44)
+;; (fire :ev-foo 44)
 ;; If I call a second time, it then runs the second function
 
 ;; TODO: Maybe source these via the gui?  Some type of triggers user wants.
