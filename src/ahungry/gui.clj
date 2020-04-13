@@ -30,8 +30,8 @@
 (defn foo [] (prn "called foo from gui"))
 (defn bar [] (prn "called bar again from gui"))
 
-(def *state (atom {:x 50
-                   :y 50
+(def *state (atom {:x 250
+                   :y 250
                    :scale 0.1
                    :moving-star? false
                    :redraw-loop nil}))
@@ -230,6 +230,8 @@
    (->
     (ss/frame
      :title "Ahungry Map"
+     :width 600
+     :height 600
      :minimum-size [300 :by 300]
      :menubar (make-menu)
      :on-close :exit
@@ -237,7 +239,7 @@
      ;; (-> (make) set-root!)
      (-> x set-root!)
      )
-    ss/pack!
+    ;; ss/pack!
     ss/show!)
    ;; Calling this, or setting it via REPL causes some issues...
    ;; (SubstanceCortex$GlobalScope/setSkin "org.pushingpixels.substance.api.skin.NebulaSkin")

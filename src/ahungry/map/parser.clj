@@ -98,6 +98,7 @@
 (defn get-current-zone []
   (let [zone-label (get-last-entered-zone)
         zone-file-name (:id (get-zone-id-from-label zone-label))]
+    (log/debug "Current zone found: " zone-file-name)
     zone-file-name))
 
 (def parse-current-zone (comp #'parse-zone #'get-current-zone))
